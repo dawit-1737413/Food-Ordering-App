@@ -24,9 +24,9 @@ import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
     EditText et_first_name, et_last_name, et_email, et_password;
-    Button sign_up;
+    Button sign_up, sign_in;
     ProgressBar progressBar;
-    private FirebaseAuth auth;
+    public static FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,7 @@ public class SignupActivity extends AppCompatActivity {
         et_password = (EditText) findViewById(R.id.et_password);
 
         sign_up = (Button) findViewById(R.id.btn_sign_up);
+        sign_in = (Button) findViewById(R.id.btn_sign_in);
         progressBar = (ProgressBar)findViewById(R.id.progressBar1);
         auth = FirebaseAuth.getInstance();
 
@@ -50,6 +51,14 @@ public class SignupActivity extends AppCompatActivity {
                 String email = et_email.getText().toString().trim();
                 String password = et_password.getText().toString().trim();
                 registerUser(first_name, last_name, email, password);
+            }
+        });
+
+        sign_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SignupActivity.this, SignInActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -87,7 +96,7 @@ public class SignupActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Map<String, Object> user = new HashMap<>();
-                            user.put("fist_name", first_name);
+                            user.put("first_name", first_name);
                             user.put("last_name", last_name);
                             user.put("email", email);
 
@@ -101,14 +110,14 @@ public class SignupActivity extends AppCompatActivity {
                                                 Intent intent = new Intent(SignupActivity.this, MainActivity.class);
                                                 startActivity(intent);
                                             } else {
-                                                Toast.makeText(SignupActivity.this, "User registration failed, Please try agian!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(SignupActivity.this, "User registration failed 1, Please try agian!", Toast.LENGTH_LONG).show();
                                                 progressBar.setVisibility(View.GONE);
                                             }
                                         }
                                     });
 
                         } else {
-                            Toast.makeText(SignupActivity.this, "User registration failed, Please try agian!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignupActivity.this, "User registration failed 2, Please try agian!", Toast.LENGTH_LONG).show();
                             progressBar.setVisibility(View.GONE);
                         }
                     }
