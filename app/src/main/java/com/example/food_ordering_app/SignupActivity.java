@@ -52,10 +52,10 @@ public class SignupActivity extends AppCompatActivity {
                 registerUser(first_name, last_name, email, password);
             }
         });
-
     }
 
     private void registerUser(final String first_name, final String last_name, final String email, String password) {
+        // input validation
         if (TextUtils.isEmpty(first_name)) {
             et_first_name.setError("First Name is required!");
             return;
